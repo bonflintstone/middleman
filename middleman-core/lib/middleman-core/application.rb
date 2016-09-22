@@ -198,7 +198,9 @@ module Middleman
       cache.clear
 
       # Setup the default values from calls to set before initialization
-      self.class.config.load_settings(self.class.superclass.config.all_settings)
+      if self.class.superclass.respond_to?(:config)
+        self.class.config.load_settings(self.class.superclass.config.all_settings)
+      end
 
       if Object.const_defined?(:Encoding)
         Encoding.default_internal = config[:encoding]
